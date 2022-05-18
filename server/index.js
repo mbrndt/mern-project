@@ -5,13 +5,10 @@ const UserModel = require("./models/Users");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// mongoose.connect(
-//   `mongodb+srv://mbot:${process.env.DATA_PASSWORD}@cluster0.dwht6.mongodb.net/test`
-// );
-
+app.use(express.json());
 mongoose.connect(
   "mongodb+srv://mbot:ktQTi9Wt8hrrhGRp@cluster0.dwht6.mongodb.net/mern-project?retryWrites=true&w=majority"
-); //mongodb+srv://mbot:ktQTi9Wt8hrrhGRp@cluster0.dwht6.mongodb.net/?retryWrites=true&w=majority
+);
 
 //API Endpoints
 
@@ -23,6 +20,14 @@ app.get("/getUsers", (req, res) => {
       res.json(users);
     }
   });
+});
+
+app.post(/createUser/, async (req, res) => {
+  const user = req.body;
+  const newUser = new UserModel(user);
+  await newUser.save();
+
+  res.json(newUser);
 });
 
 app.listen(PORT, () => {
