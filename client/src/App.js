@@ -19,7 +19,7 @@ function App() {
       email,
       username,
     }).then((response) => {
-      alert("User created successfully");
+      setListOfUsers([...listOfUsers, response.data]);
     });
   };
 
